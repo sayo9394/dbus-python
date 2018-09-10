@@ -59,9 +59,9 @@ class TestObject(dbus.service.Object):
 if __name__ == '__main__':
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-    session_bus = dbus.SessionBus()
-    name = dbus.service.BusName('com.example.TestService', session_bus)
-    object = TestObject(session_bus)
+    system_bus = dbus.SystemBus()
+    name = dbus.service.BusName('com.example.TestService', system_bus)
+    object = TestObject(system_bus)
 
     loop = gobject.MainLoop()
     print "Running example signal emitter service."

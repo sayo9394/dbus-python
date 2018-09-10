@@ -40,13 +40,16 @@ class DemoException(dbus.DBusException):
     _dbus_error_name = 'com.example.DemoException'
 
 class SomeObject(dbus.service.Object):
+    def __init__(self, bus, path):
+        dbus.service.Object.__init__(self, bus, path)
+        self._last_input = None
 
     @dbus.service.method("com.example.SampleInterface",
                          in_signature='s', out_signature='as')
     def HelloWorld(self, hello_message):
         print (str(hello_message))
         return ["Hello", " from example-service.py", "with unique name",
-                session_bus.get_unique_name()]
+                system_bus.get_unique_name()]
 
     @dbus.service.method("com.example.SampleInterface",
                          in_signature='', out_signature='')
@@ -73,9 +76,9 @@ class SomeObject(dbus.service.Object):
 if __name__ == '__main__':
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-    session_bus = dbus.SessionBus()
-    name = dbus.service.BusName("com.example.SampleService", session_bus)
-    object = SomeObject(session_bus, '/SomeObject')
+    system_bus = dbus.SystemBus()
+    name = dbus.service.BusName("com.example.SampleService", system_bus)
+    object = SomeObject(system_bus, '/SomeObject')
 
     mainloop = gobject.MainLoop()
     print "Running example service."

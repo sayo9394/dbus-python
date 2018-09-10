@@ -99,7 +99,7 @@ def make_calls():
 if __name__ == '__main__':
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
-    bus = dbus.SessionBus()
+    bus = dbus.SystemBus()
     try:
         remote_object = bus.get_object("com.example.SampleService","/SomeObject")
     except dbus.DBusException:

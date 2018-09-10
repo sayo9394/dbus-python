@@ -35,7 +35,7 @@ from traceback import print_exc
 import dbus
 
 def main():
-    bus = dbus.SessionBus()
+    bus = dbus.SystemBus()
 
     try:
         remote_object = bus.get_object("com.example.SampleService",
